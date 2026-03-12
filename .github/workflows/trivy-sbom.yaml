@@ -1,0 +1,83 @@
+---
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - release/**
+      - 56098
+  workflow_dispatch:
+
+jobs:
+  checkout:
+    name: Checkout code
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: verify checkout
+        run: |
+          pwd
+          ls -la
+
+  separate-sbom-generation:
+    name: SBOM generation
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: verify checkout
+        run: |
+          pwd
+          ls -la
+      - name: Run Trivy Locally
+        uses: docker://aquasec/aqua-scanner
+        with:
+          args:  trivy fs --reachability --package-json --dotnet-proj \
+                  --db-repository=registry.aquasec.com/trivy-db:2 \
+                  --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
+                  --scanners vuln,misconfig,secret \
+                  --java-db-repository=registry.aquasec.com/trivy-java-db:1 -d --secret-config trivy-secret-rules.yaml  .
+          # To customize which severities to scan for, add: --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          # To enable SAST scanning, add: --sast
+          # To enable reachability scanning, add: --reachability
+          # To enable npm/dotnet/gradle non-lock file scanning, add: --package-json / --dotnet-proj / --gradle
+          # Update Comments
+        env:
+          AQUA_KEY: ${{ secrets.AQUA_KEY }}
+          AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          TRIVY_RUN_AS_PLUGIN: aqua
+          TRIVY_USERNAME: ${{ secrets.AQUASEC_REGISTRY_USER_ID }}
+          TRIVY_PASSWORD: ${{ secrets.AQUASEC_REGISTRY_PASSWORD }}
+          AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
+          CSPM_URL: https://eu-1.api.cloudsploit.com 
+      - name: Generate SBOM Locally
+        id: generate-sbom-local
+        run: |
+              export BILLY_SERVER=https://billy.codesec.aquasec.com
+              curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
+              curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
+              if ! cat install.sh.checksum | sha256sum --check; then
+              echo "install.sh checksum failed"
+              exit 1
+              fi
+              BINDIR="." sh install.sh
+              rm install.sh install.sh.checksum
+              ./billy generate \
+               --access-token "${{ secrets.TOKEN_GITHUB }}" \
+               --aqua-key "${{ secrets.AQUA_KEY }}" \
+               --aqua-secret "${{ secrets.AQUA_SECRET }}" \
+               --cspm-url https://eu-1.api.cloudsploit.com \
+               --artifact-path "." 
+
+                # The docker image name:tag of the newly built image
+                # --artifact-path "my-image-name:${{ env.tag-version }}" 
+                # OR the path to the root folder of your project. I.e my-repo/my-app 
+                # --artifact-path "${{env.MY_APP_ROOT}}"
+        env:
+          AQUA_KEY: ${{ secrets.AQUASEC_API_KEY }}
+          AQUA_SECRET: ${{ secrets.AQUASEC_API_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
