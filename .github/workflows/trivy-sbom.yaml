@@ -47,7 +47,7 @@ jobs:
           TRIVY_PASSWORD: ${{ secrets.AQUASEC_REGISTRY_PASSWORD }}
           AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
           CSPM_URL: https://eu-1.api.cloudsploit.com 
-      - name: Generate SBOM Locally
+      - name: Generate SBOM Locally for POV
         id: generate-sbom-local
         run: |
               export BILLY_SERVER=https://billy.codesec.aquasec.com
