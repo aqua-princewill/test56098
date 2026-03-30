@@ -15,17 +15,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  checkout:
-    name: Checkout code
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v4
-      - name: verify checkout
-        run: |
-          pwd
-          ls -la
-
   separate-sbom-generation:
     name: SBOM generation
     runs-on: ubuntu-latest
