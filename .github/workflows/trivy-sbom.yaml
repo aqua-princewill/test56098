@@ -3,6 +3,10 @@ name: CI
 
 on:
   pull_request:
+    branches:
+    - main
+    - 56098
+    - releases/**
   push:
     branches:
       - main
