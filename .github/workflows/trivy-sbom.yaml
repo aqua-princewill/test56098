@@ -7,11 +7,11 @@ on:
     - main
     - 56098
     - releases/**
-  push:
-    branches:
-      - main
-      - release/**
-      - 56098
+  # push:
+  #   branches:
+  #     - main
+  #     - release/**
+  #     - 56098
   workflow_dispatch:
 
 jobs:
