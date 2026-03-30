@@ -8,6 +8,7 @@ on:
     - 56098
     - releases/**
     - main-56098
+    - main-pr-56098
   # push:
   #   branches:
   #     - main
