@@ -34,9 +34,10 @@ jobs:
         with:
           args:  trivy fs --reachability --sast --package-json --dotnet-proj \
                   --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
+                  --java-db-repository=registry.aquasec.com/trivy-java-db:1 -d \
+                  --db-repository=registry.aquasec.com/trivy-db:2 \ 
                   --scanners vuln,misconfig,secret .
-                  #--java-db-repository=registry.aquasec.com/trivy-java-db:1 -d
-                  # --db-repository=registry.aquasec.com/trivy-db:2 \
+
           # To customize which severities to scan for, add: --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
           # To enable SAST scanning, add: --sast
           # To enable reachability scanning, add: --reachability
