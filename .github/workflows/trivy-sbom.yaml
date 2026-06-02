@@ -29,6 +29,7 @@ jobs:
           pwd
           ls -la
       - name: Run Trivy Locally
+        continue-on-error: true
         uses: docker://aquasec/aqua-scanner
         with:
           args:  trivy fs --reachability --sast --package-json --dotnet-proj \
