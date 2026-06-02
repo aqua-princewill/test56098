@@ -85,3 +85,4 @@ jobs:
           AQUA_SECRET: ${{ secrets.AQUASEC_SECRET }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           BILLY_SERVER: https://billy.eu-1.codesec.aquasec.com
+          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
