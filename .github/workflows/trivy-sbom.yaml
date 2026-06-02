@@ -63,12 +63,6 @@ jobs:
               fi
               BINDIR="." sh install.sh
               rm install.sh install.sh.checksum
-              ./billy health \
-               --access-token "${{ env.TOKEN_GITHUB }}" \
-               --aqua-key "${{ secrets.AQUA_KEY }}" \
-               --aqua-secret "${{ secrets.AQUA_SECRET }}" \
-               --cspm-url https://eu-1.api.cloudsploit.com \
-               --artifact-path "."
               ./billy generate \
                --access-token "${{ secrets.TOKEN_GITHUB }}" \
                --aqua-key "${{ secrets.AQUA_KEY }}" \
@@ -84,5 +78,4 @@ jobs:
           AQUA_KEY: ${{ secrets.AQUASEC_KEY }}
           AQUA_SECRET: ${{ secrets.AQUASEC_SECRET }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          BILLY_SERVER: https://billy.eu-1.codesec.aquasec.com
           GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
