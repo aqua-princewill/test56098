@@ -79,4 +79,4 @@ jobs:
           AQUA_KEY: ${{ secrets.AQUASEC_KEY }}
           AQUA_SECRET: ${{ secrets.AQUASEC_SECRET }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          #GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
