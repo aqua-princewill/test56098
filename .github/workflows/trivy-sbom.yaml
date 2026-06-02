@@ -5,6 +5,7 @@ on:
   pull_request:
     branches:
     - main
+    - master
     - 56098
     - releases/**
     - main-56098
