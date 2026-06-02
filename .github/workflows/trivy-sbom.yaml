@@ -75,6 +75,6 @@ jobs:
                 # OR the path to the root folder of your project. I.e my-repo/my-app 
                 # --artifact-path "${{env.MY_APP_ROOT}}"
         env:
-          AQUA_KEY: ${{ secrets.AQUASEC_API_KEY }}
-          AQUA_SECRET: ${{ secrets.AQUASEC_API_SECRET }}
+          AQUA_KEY: ${{ secrets.AQUASEC_KEY }}
+          AQUA_SECRET: ${{ secrets.AQUASEC_SECRET }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
