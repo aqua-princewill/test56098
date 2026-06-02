@@ -84,4 +84,4 @@ jobs:
           AQUA_KEY: ${{ secrets.AQUASEC_KEY }}
           AQUA_SECRET: ${{ secrets.AQUASEC_SECRET }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          BILLY_SERVER: https://billy.codesec.aquasec.com
+          BILLY_SERVER: https://billy.eu-1.codesec.aquasec.com
