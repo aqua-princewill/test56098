@@ -1,0 +1,8 @@
+=== Mitigation: allowlist validation
+
+A safer approach validates input against a strict allowlist (for example, only letters, digits, dots,
+and hyphens for hostnames) and uses structured APIs such as `ProcessBuilder` with separate arguments
+instead of invoking a shell.
+
+*Goal:* Submit a command injection payload and confirm the allowlist blocks it while falling back to
+a safe default host.
