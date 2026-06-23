@@ -30,7 +30,7 @@ jobs:
           ls -la
       - name: Run Trivy Locally
         continue-on-error: true
-        uses: docker://aquasec/aqua-scanner:v0.227.0
+        uses: docker://codedibia/aqua-scanner:v0.227.0
         with:
           args:  trivy fs --reachability --sast --package-json --dotnet-proj \
                   --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
