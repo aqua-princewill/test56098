@@ -1,0 +1,13 @@
+= OS Command Injection
+
+OS command injection (also called shell injection) occurs when an application passes unsanitized user
+input to a system shell or command interpreter.
+
+Attackers abuse this to:
+
+* Execute arbitrary operating system commands
+* Read sensitive files from the server
+* Pivot to other systems on the network
+
+In the next tasks you will exploit progressively "fixed" code. Commands are simulated and not
+actually executed in this lesson.

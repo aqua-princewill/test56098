@@ -91,7 +91,7 @@ public class GeneralLessonIntegrationTest extends IntegrationTest {
   }
 
   @Test
-  public void vulnerableComponents() {
+  public void vulnerableComponents() throws Exception {
     if (StringUtils.hasText(System.getProperty("running.in.docker"))) {
       String solution =
           "<contact class='dynamic-proxy'>\n"
@@ -109,7 +109,17 @@ public class GeneralLessonIntegrationTest extends IntegrationTest {
       Map<String, Object> params = new HashMap<>();
       params.clear();
       params.put("payload", solution);
-        checkAssignment(webGoatUrlConfig.url("VulnerableComponents/attack1"), params, true);
+      checkAssignment(webGoatUrlConfig.url("VulnerableComponents/attack1"), params, true);
+
+      java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+      try (java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(baos)) {
+        oos.writeObject(
+            new org.apache.commons.collections.functors.ConstantTransformer("gadget"));
+      }
+      params.clear();
+      params.put("payload", java.util.Base64.getEncoder().encodeToString(baos.toByteArray()));
+      checkAssignment(webGoatUrlConfig.url("VulnerableComponents/attack2"), params, true);
+
       checkResults("VulnerableComponents");
     }
   }

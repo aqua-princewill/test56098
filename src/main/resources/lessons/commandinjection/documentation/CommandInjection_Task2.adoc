@@ -1,0 +1,10 @@
+=== Task 2: Blacklist filter bypass
+
+A developer added a naive filter that rejects input containing `;`, `&&`, or `|`.
+
+*Goal:* Bypass the filter using an alternative injection technique such as:
+
+* Newline injection (`%0a` or an actual line break)
+* Command substitution with backticks or `$(...)`
+
+The filter message in the output confirms when your payload was blocked.

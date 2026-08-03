@@ -1,0 +1,16 @@
+=== How it happens
+
+Many applications invoke OS utilities such as `ping`, `nslookup`, or image converters. When user
+input is concatenated into a command string and passed to a shell, metacharacters like `;`, `&&`,
+`|`, or newlines can terminate the intended command and start a new one.
+
+[source,bash]
+----
+# Intended
+ping -c 1 8.8.8.8
+
+# Attacker supplies: 8.8.8.8; whoami
+ping -c 1 8.8.8.8; whoami
+----
+
+The application may only intend to ping a host, but the shell executes both commands.
