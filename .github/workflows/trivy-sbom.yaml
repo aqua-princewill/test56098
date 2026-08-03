@@ -33,9 +33,6 @@ jobs:
         uses: docker://codedibia/aqua-scanner:permissions-fix
         with:
           args:  trivy fs --reachability --sast --package-json --dotnet-proj \
-                  --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
-                  --java-db-repository=registry.aquasec.com/trivy-java-db:1 -d \
-                  --db-repository=registry.aquasec.com/trivy-db:2 \ 
                   --scanners vuln,misconfig,secret .
 
           # To customize which severities to scan for, add: --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
@@ -69,7 +66,7 @@ jobs:
                --access-token "${{ secrets.TOKEN_GITHUB }}" \
                --aqua-key "${{ secrets.AQUA_KEY }}" \
                --aqua-secret "${{ secrets.AQUA_SECRET }}" \
-               --cspm-url https://eu-1.api.cloudsploit.com \
+               --cspm-url https://stage.api.cloudsploit.com/v2/tokens \
                --artifact-path "." 
 
                 # The docker image name:tag of the newly built image
