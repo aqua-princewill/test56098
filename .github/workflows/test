@@ -1,0 +1,84 @@
+import java.io.*;
+import java.sql.*;
+import java.util.Scanner;
+
+public class VulnerableApp {
+
+    // 🔴 Hardcoded credentials (Sensitive Data Exposure)
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/testdb";
+    private static final String USER = "admin";
+    private static final String PASS = "password123";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        // 🔴 SQL Injection vulnerability
+        if (authenticateUser(username, password)) {
+            System.out.println("Login successful!");
+
+            System.out.print("Enter file name to read: ");
+            String fileName = scanner.nextLine();
+
+            // 🔴 Path Traversal vulnerability
+            readFile(fileName);
+
+        } else {
+            System.out.println("Invalid credentials");
+        }
+
+        // 🔴 Command Injection
+        System.out.print("Enter OS command to execute: ");
+        String cmd = scanner.nextLine();
+        executeCommand(cmd);
+    }
+
+    public static boolean authenticateUser(String username, String password) {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt = conn.createStatement();
+
+            // ❌ Unsafe query (SQL Injection)
+            String query = "SELECT * FROM users WHERE username = '" 
+                           + username + "' AND password = '" + password + "'";
+            
+            ResultSet rs = stmt.executeQuery(query);
+
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace(); // 🔴 Information Leakage
+            return false;
+        }
+    }
+
+    public static void readFile(String fileName) {
+        try {
+            // ❌ No validation (Path Traversal)
+            File file = new File("data/" + fileName);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace(); // 🔴 Information Leakage
+        }
+    }
+
+    public static void executeCommand(String cmd) {
+        try {
+            // ❌ Command Injection
+            Runtime.getRuntime().exec(cmd);
+        } catch (Exception e) {
+            e.printStackTrace(); // 🔴 Information Leakage
+        }
+    }
+}

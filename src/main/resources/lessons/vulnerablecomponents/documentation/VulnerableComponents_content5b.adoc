@@ -1,0 +1,27 @@
+== Exploiting CVE-2015-4852 (Apache Commons Collections)
+
+WebGoat intentionally depends on `commons-collections` version 3.2.1. That release contains
+deserialization gadget classes such as `InvokerTransformer` and `ChainedTransformer` that attackers
+chain together to achieve remote code execution when an application deserializes untrusted data.
+
+This assignment accepts a Base64-encoded Java serialized object. If deserialization yields a class
+from the `org.apache.commons.collections` package, you have demonstrated why the vulnerable
+component matters.
+
+*Hint:* Tools such as ysoserial can generate gadget chains. For learning purposes you can also
+serialize a single functor class (for example `ConstantTransformer`) and submit the Base64 payload.
+
+[source,java]
+----
+import java.io.*;
+import java.util.Base64;
+import org.apache.commons.collections.functors.ConstantTransformer;
+
+ByteArrayOutputStream baos = new ByteArrayOutputStream();
+ObjectOutputStream oos = new ObjectOutputStream(baos);
+oos.writeObject(new ConstantTransformer("gadget"));
+oos.close();
+String payload = Base64.getEncoder().encodeToString(baos.toByteArray());
+----
+
+Paste the payload below and submit it.

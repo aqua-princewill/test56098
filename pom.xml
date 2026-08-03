@@ -136,7 +136,13 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>${xstream.version}</version>
+        <version>1.4.17</version>
+      </dependency>
+      <dependency>
+        <!-- do not update necessary for lesson -->
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>${commons-collections.version}</version>
       </dependency>
       <dependency>
         <groupId>cglib</groupId>
@@ -306,6 +312,10 @@
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>

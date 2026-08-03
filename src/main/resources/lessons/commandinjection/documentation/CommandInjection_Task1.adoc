@@ -1,0 +1,13 @@
+=== Task 1: Basic command injection
+
+This network diagnostic tool builds a shell command from your input:
+
+[source,bash]
+----
+ping -c 1 <your host>
+----
+
+*Goal:* Append a shell metacharacter and an extra command so the simulated shell runs more than
+just `ping`.
+
+*Example payload:* `8.8.8.8; whoami`
