@@ -50,8 +50,8 @@ jobs:
           TRIVY_RUN_AS_PLUGIN: aqua
           TRIVY_USERNAME: ${{ secrets.AQUASEC_REGISTRY_USER_ID }}
           TRIVY_PASSWORD: ${{ secrets.AQUASEC_REGISTRY_PASSWORD }}
-          AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
-          CSPM_URL: https://eu-1.api.cloudsploit.com
+          AQUA_URL: https://api.dev.supply-chain.cloud.aquasec.com/v2/build
+          CSPM_URL: https://stage.api.cloudsploit.com/v2/tokens
           #AQUA_PRESERVE_RESOLVED_COMMENTS: true
       - name: Generate SBOM Locally for POV
         id: generate-sbom-local
